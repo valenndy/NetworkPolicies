@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-test
+  namespace: app
+spec:
+  podSelector:
+    matchLabels:
+      app: web   # asegúrate de que el deployment tenga label app:web (si no, cámbialo)
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: test
+    ports:
+    - protocol: TCP
+      port: 80
